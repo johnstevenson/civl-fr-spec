@@ -1,0 +1,6 @@
+/official
+/releases
+/temp
+/*.adoc
+*.html
+*.pdf

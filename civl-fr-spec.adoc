@@ -1,0 +1,241 @@
+// settings
+:doctype: book
+:chapter-label:
+:toc: left
+:toclevels: 2
+:toc-title: Contents
+:sectnums:
+:sectnumlevels: 5
+:icons: font
+:includedir: includes
+:xrefstyle: short
+:pdf-style: basic
+:pdf-stylesdir: assets
+:pdf-fontsdir: assets/fonts
+ifdef::release[]
+include::official/release.adoc[]
+endif::[]
+ifndef::release[]
+= Draft Flight Recorder Specification
+:revdate: {docdate}
+endif::[]
+// end settings
+
+[preface]
+== Preface
+
+****
+This is a draft document intended for review and feedback. The content will certainly change, most
+likely to the presentation and detail rather than the core principles.
+
+Comment text in a box (like this) is not part of the final specification.
+
+The original intention was to define a specification for flight instruments suitable for Category 1
+competitions, but this proved extremely difficult due to the variety of systems and instruments that
+are currently in use.
+
+Instead, a simpler approach has been taken by defining a specification for a top-level flight recorder
+that is suitable for all HPG activities.
+
+Once established, it will be possible to add a lower level of approval as an Appendix, covering other
+instruments. This part will be complex and may require bureau decisions about the authenticity and
+level of proof required for different CIVL activities (records, Category 1 and 2 competitions, the badge
+system and the WXC).
+****
+
+== Introduction
+This document contains the rules, procedures and specifications applying to equipment that records flight performances to FAI/CIVL criteria using instruments based on Global Navigation Satellite Systems (GNSS).
+
+It is based on the *Technical Specification for GNSS Flight Recorders* from the FAI International Gliding Commission (IGC), which although primarily intended for the gliding world contains a special category for Non-IGC flight recorders:
+
+____
+A recording device that records GNSS fixes in the form of the basic IGC file structure but is not designed for IGC-approval. Such devices could be, for example, a flight instrument with a recording function, a stand-alone GNSS unit, or a portable device that receives and stores GNSS data.
+
+Where FAI Air Sports other than gliding are concerned, the type of device, the method of data storage and security considerations must be approved by the appropriate FAI Air Sport Commission for flights within its jurisdiction.
+____
+
+This CIVL Flight Recorder Specification therefore inherits the core principles and terms from the IGC Specification, as it will be referred to, and describes the changes required to make it suitable for hang gliding and paragliding (HPG) instruments.
+
+The IGC Specification is available from the documents section on the IGC website at http://www.fai.org/gliding. It is updated every two years or so, to keep in line with hardware improvements or specific gliding requirements, and this does not generally affect its base values.
+
+****
+To do: Check that the above link is current before publication, as it has changed several times during
+the FAI website revamp.
+****
+
+== Approvals and Certification
+
+=== General Policy
+CIVL has no inclination to require flight recorders to be submitted for compliance testing. Instead, a system of self-certification will be used, whereby a manufacturer applies for a CIVL specified level of approval by certifying that their product meets the standards required.
+
+If it is subsequently discovered that any claim made is false (or has been rendered such by a regressive update), the approval may be revoked. The actual mechanism for granting, managing or revoking approvals is outside the scope of this specification.
+
+=== Approval Levels
+The published CIVL approval document for individual types of flight recorders will specify any limitations on types of flights for which the approval is valid. This specification currently lists one level of approval. Others may be added in the future.
+
+==== Level 1 - CIVL approval for All Flights
+This applies to flight recorders that may be used for evidence for all flights up to and including CIVL world records. All recorders must comply with the requirements in this specification.
+
+_Note: IGC Flight Recorders with a current approval for All Flights would also comply, although officials may not be equipped to handle all such devices._
+
+=== Other types of approval
+
+==== Recorders that are not CIVL approved
+This applies to flight recorders that have either not been submitted for CIVL approval or where a previous CIVL approval has been revoked.
+
+==== Approvals with Acquired Rights
+Existing instruments which do not meet the full requirements of this specification may be granted Acquired Rights approval based on the concessions outlined in xref:_acquired_rights[].
+
+==== Approvals for competitions
+For CIVL competition flights, the types of recorders that may be accepted are at the discretion of the competition organisers, subject to any higher level rules and procedures under which the competition operates.
+
+== Requirements
+The main changes from the IGC specification are outlined briefly here and described in more detail below:
+
+* There are no stringent requirements for the physical security of the instrument, but data integrity is still required using the G record mechanism.
+*	GNSS altitude data is recorded above the WGS84 geoid.
+* HFALG and HFALP header records are included to specify the altitude types.
+* There is no requirement for F records or I records (additional fix data).
+
+=== General principles
+The IGC data file produced by a flight recorder will only provide a true record to a level that is reasonable and practicable. It is unrealistic to assume that nobody can successfully falsify or alter a flight performance. Although this is uncommon, it is important that instrument manufacturers and developers understand the inherent weaknesses of the system and take all possible steps to ensure that the flight data cannot be tampered with or altered by the user, during the recording of the flight and afterwards.
+
+==== Flight recorder
+The recorder must be a device capable of producing a digitally signed IGC flight data file, from positional data obtained from internal GNSS and pressure sensor modules. There are no specific requirements regarding the physical security of the instrument, other than to take all practicable measures to ensure that:
+
+* False data cannot be injected or recorded.
+* Internal data cannot be modified.
+* The security key cannot be read from the device.
+
+==== External user data
+The instrument must provide a method for users to input required data such as their pilot name, and other details like glider identification or a flight declaration.
+
+No user-supplied data must be recorded in the IGC file unless it is an appropriate H record value, or a flight declaration that is reported in the C records. Once recording has started, or the start of flight detected, it must not be possible to modify this data.
+
+==== IGC file creation
+The IGC file must be created when the end of the flight is detected or notified by the user, or when the instrument is powered off, and digitally signed using the G record mechanism. The file must be written to user-accessible storage so that it can be easily transferred to an external location.
+
+Alternatively, the IGC file may be written incrementally to the user-accessible storage during the flight, with the digital signature recalculated and appended to each data update.
+
+==== Digital signature
+As per the IGC Specification, the flight recorder must calculate a digital security signature of the data recorded and append it to the end of the IGC file as a G record. The digital signature is used to check that the flight data in the IGC file is identical to the data that was recorded.
+
+===== Signature source data
+The digital signature must only be applied to data obtained directly from the internal memory of the flight recorder. It must not be applied to data obtained from user-accessible storage or to data transferred to an external location. If an instrument malfunction causes IGC data to fail validation, contain errors or be otherwise unusable, a manufacturer may only recreate a signed IGC file from internal data that has been manually extracted from the returned physical device.
+
+===== Data protected by digital signature
+The records that require security protection are defined in the IGC Specification and repeated here. They comprise all records, except H records that use the O source and L records that do not use the three-letter manufacturer identifier. The intention is that other information relating to the flight may be added by an Official Observer or user at a later date, without compromising data integrity.
+
+===== Security algorithm
+This specification does not require the level of security mandated by the IGC, which uses asymmetric cryptography with private keys unique to each instrument. This specification will allow a private key shared between similar instrument models or an industry-standard message authentication system like HMAC instead. This uses a hashing function in combination with a secret key to protect the integrity and authenticity of the data. A minimum of HMAC-SHA256 is recommended using a 256-bit key.
+
+===== Protection of security keys
+It must be ensured that the minimum number of persons has knowledge of a private or secret key and that reasonable steps have been taken to prevent access to it from the manufacturer, from within the instrument, from external firmware update programs and, in the case of a secret key, from the external validation program.
+
+==== IGC file validation
+The manufacturer must supply a separate validation program that checks the integrity of its IGC files. This is achieved by creating a digital signature of the file data and reporting if it matches the digital signature in the G record.
+
+****
+To do: Decide and explain the requirements of the validation program. This may be more suited to an appendix. See CIVL Vali Specification which the GNSS Flight Recorder Approval Committee (GFAC) is currently reviewing. GFAC has said that it is possible that we could use Vxx three-letter manufacturer codes for CIVL approved flight recorders (V is for Vol Libre), and  we await their decision. New instruments would require new validation programs, so we could refine our requirements.
+****
+
+=== Altitude data
+
+==== GNSS altitude
+GNSS altitude must be recorded with reference to the WGS84 geoid, as opposed to the ellipsoid which is a requirement for official IGC flight recorders. The reason for this major deviation from the IGC Specification is that this is what HPG instruments have always recorded (a decision initially made so that altitude data would closely match that recorded by consumer GPS units).
+
+The geoid is a smooth but irregular theoretical surface over the whole earth that is close to mean sea level. It differs from the WGS84 ellipsoid by +65m to -102m.
+
+==== Pressure altitude
+Pressure altitude must be recorded with reference to the International Standard Atmosphere, as per the IGC Specification. The calibration of the pressure sensor will be subject to drift over time and the manufacturer should indicate in reference documentation the period after which any remedial action or inspection should be taken.
+
+==== Altitude H records
+To indicate that altitude data has been recorded by a Non-IGC flight recorder, the IGC provides specific header records which must be used to report the altitude types:
+
+[literal]
+HFALGALTGPS:GEO
+HFALPALTPRESSURE:ISA
+
+=== Fix data
+The F record (satellite constellation) is not mandatory and neither is the inclusion of additional fix data, such as fix accuracy (FXA), in the B record. If any of these elements are used they must follow the IGC Specification.
+
+==== Required elements
+Only the basic B record fix data is required, which comprises UTC time, latitude, longitude, fix validity, pressure altitude and GNSS altitude. The requirements and formats are as the IGC Specification, except that GNSS altitude must reference the WGS84 geoid, with negative altitudes formatted as per pressure altitude.
+
+==== Additional data
+If additional fix data is recorded, using either the I record or K record mechanisms, this should be restricted to information that is only available from sensors attached to the instrument and not something that can be calculated later by analysis software.
+
+==== UTC time
+Time must be incremental and special care must be taken when incorporating values from the instrument's RTC (real time clock) that it remains so. The UTC leap-second correction must be applied to all recorded fixes, as per the IGC Specification. Although this is often handled by the GNSS module, the instrument should not start recording until the correct UTC time has been resolved.
+
+==== GNSS drop out
+The fix validity field must be set to V in the case of GNSS altitude or positional drop-out. If GNSS altitude is not available, then its B record field must be zeroed. If there is no GNSS data, pressure altitude fixing must continue using times derived from the RTC, the last recorded positional data and zeroed GNSS altitude.
+
+==== Predictive fixes and fix data manipulation
+The GNSS module must not use any forward-prediction system and must be operated in a mode most suitable for HPG aviation. There must be no additional processing of GNSS data, which must be reported as calculated by and received from the internal module. For reporting pressure altitudes, processing must by limited to the minimum required by the sensor to determine the altitude value. There must be no mixing of GNSS and pressure altitude data.
+
+==== Fix interval
+A fix interval no longer than 30 seconds is required to generally establish flight continuity. However, specific activities will have more stringent requirements and the instrument should be capable of recording at much shorter intervals, generally between 1 and 10 seconds.
+
+==== Baseline fixes
+To establish accurate positions and pressure altitudes, the IGC file should, where possible, contain valid fixes on the ground before takeoff and after landing. The duration of these baseline fixes should be at least 20 seconds.
+
+=== IGC File
+The file format described in the IGC Specification must be used, with the exception that only the A, H, B and G records are mandatory.
+
+==== H records
+The required H records are as the IGC Specification, plus the two altitude records (HFALG and HFALP, see xref:_altitude_h_records[]) defined for Non-IGC use. It is recommended that the H records are ordered as described and that the special values NIL (not applicable) and NKN (not known) are used where appropriate for missing user-data.
+
+==== Example
+The following short example shows IGC data from a fictitious instrument that uses the VXX manufacturer identifier and reports the minimum information required.
+
+[literal]
+AVXX00026
+HFDTEDATE:160816
+HFPLTPILOTINCHARGE:Bloggs Bill
+HFCM2CREW2:NIL
+HFGTYGLIDERTYPE:NKN
+HFGIDGLIDERID:NKN
+HFDTMGPSDATUM:WGS84
+HFRFWFIRMWAREVERSION:0.2-alpha
+HFRHWHARDWAREVERSION:1.0
+HFFTYFRTYPE:Zebra Instruments,Proto 1
+HFGPSRECEIVER:UBLOX,NEO7,56,50000
+HFPRSPRESSALTSENSOR:MEAS,MS5611,25907
+HFALGALTGPS:GEO
+HFALPALTPRESSURE:ISA
+B1153555536248N00339528WA0050200475
+B1154005536249N00339528WA0050300476
+B1154105536249N00339528WA0050300477
+B1154155536248N00339528WA0050300476
+…
+G5734B6437B7796F96460F5D8AAC8FD4F
+G0B6401B0E19216179A25DAE23CD0487F
+
+The main points to note and reiterate are as follows:
+
+* The A record is restricted to the manufacturer id and the instrument serial number.
+* All IGC-required H records, plus additional altitude type records are used.
+* The F source is used for the required H record data.
+* The HFDTE record does not show the flight number on the day, which is not mandatory.
+* The instrument manufacturer and model are reported in specific H records.
+* The instrument sensor details are reported in specific H records.
+* The special values NIL and NKN are used.
+
+Where other records are used, for example the C declaration records or the I record for additional fix data, they must strictly follow the requirements of the IGC specification.
+
+****
+To do: It has been suggested that we include a fuller description of the IGC file format and individual record requirements. While this may be useful, it would duplicate large parts of the IGC Specification (which we often contribute to). Perhaps a separate CIVL guidelines document would be the answer?
+****
+
+=== Acquired Rights
+Existing instruments that cannot be practicably updated may be approved if they generally conform to this specification but cannot match all requirements. Allowances will be made for the following:
+
+==== Data storage and transfer
+Instruments that do not have user-accessible storage, but instead require external transfer software, will only be allowed if the IGC file is created by the instrument and not the external software.
+
+==== Security algorithm
+Industry-standard security algorithms other than those specified may be acceptable if they provide a strong level of security and data has not known to have been comprised in the past.
+
+==== Data in the IGC File
+Some variation from the requirements of this specification may be allowed, provided that it is limited to H record data and that the pilot, instrument identification and other core fields are included in these records.
