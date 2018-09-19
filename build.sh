@@ -11,8 +11,8 @@ current_branch="$(git rev-parse --abbrev-ref HEAD)"
 
 # Check there are no changes to stage or commit
 if [ ! -z "$(git status --porcelain)" ]; then
-    echo "WARNING: Uncommitted changes on $current_branch branch"
-    #exit 1
+    echo "Uncommitted changes on $current_branch branch - build aborted"
+    exit 1
 fi
 
 # Get the date of the current commit
