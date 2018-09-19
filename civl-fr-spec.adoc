@@ -23,22 +23,17 @@ include::assets/license.adoc[]
 == Preface
 
 ****
-This is a draft document intended for review and feedback. The content will certainly change, most
-likely to the presentation and detail rather than the core principles.
+The initial edition (December 2017) of this specification was accepted at the 2018 CIVL plenary.
 
-Comment text in a box (like this) is not part of the final specification.
+Because there is no current mechanism to manage the approval process, flight instrument
+manufacturers should follow this specification when introducing new models.
 
-The original intention was to define a specification for flight instruments suitable for Category 1
-competitions, but this proved extremely difficult due to the variety of systems and instruments that
-are currently in use.
+The next stage is to specify the approval process and possibly add a Level 2 Approval, to cover a
+broader range of instruments.
 
-Instead, a simpler approach has been taken by defining a specification for a top-level flight
-recorder that is suitable for all HPG activities.
-
-Once established, it will be possible to add a lower level of approval as an Appendix, covering
-other instruments. This part will be complex and may require bureau decisions about the authenticity
-and level of proof required for different CIVL activities (records, Category 1 and 2 competitions,
-the badge system and the WXC).
+The IGC GNSS Flight Recorder Approval Committee (GFAC) have reserved the Vxx three-letter
+manufacturer codes for CIVL approved flight recorders (V is for Vol Libre). The allocation of these,
+together with the validation program requirements, will form part of the new approval process.
 ****
 
 == Introduction
@@ -65,14 +60,10 @@ This CIVL Flight Recorder Specification therefore inherits the core principles a
 IGC Specification, as it will be referred to, and describes the changes required to make it suitable
 for hang gliding and paragliding (HPG) instruments.
 
-The IGC Specification is available from the documents section on the IGC website at
-http://www.fai.org/gliding. It is updated every two years or so, to keep in line with hardware
-improvements or specific gliding requirements, and this does not generally affect its base values.
-
-****
-To do: Check that the above link is current before publication, as it has changed several times
-during the FAI website revamp.
-****
+The IGC Specification is available from the Flight Recorder section at
+https://www.fai.org/igc-documents. It is updated every two years or so, to keep in line with
+hardware improvements or specific gliding requirements, and this does not generally affect its base
+values.
 
 == Approvals and Certification
 
@@ -210,12 +201,11 @@ files. This is achieved by creating a digital signature of the file data and rep
 the digital signature in the G record.
 
 ****
-To do: Decide and explain the requirements of the validation program. This may be more suited to an
-appendix. See CIVL Vali Specification which the GNSS Flight Recorder Approval Committee (GFAC) is
-currently reviewing. GFAC has said that it is possible that we could use Vxx three-letter
-manufacturer codes for CIVL approved flight recorders (V is for Vol Libre), and  we await their
-decision. New instruments would require new validation programs, so we could refine our
-requirements.
+The IGC GNSS Flight Recorder Approval Committee (GFAC) have reserved the Vxx three-letter
+manufacturer codes for CIVL approved flight recorders (V is for Vol Libre).
+
+The allocation of these, together with the requirements of the validation program, will form part
+of the new approval process.
 ****
 
 === Altitude data
@@ -351,13 +341,6 @@ The main points to note and reiterate are as follows:
 
 Where other records are used, for example the C declaration records or the I record for additional
 fix data, they must strictly follow the requirements of the IGC specification.
-
-****
-To do: It has been suggested that we include a fuller description of the IGC file format and
-individual record requirements. While this may be useful, it would duplicate large parts of the IGC
-Specification (which we often contribute to). Perhaps a separate CIVL guidelines document would be
-the answer?
-****
 
 === Acquired Rights
 
