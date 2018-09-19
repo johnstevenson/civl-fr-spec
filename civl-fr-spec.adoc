@@ -43,7 +43,8 @@ and level of proof required for different CIVL activities (records, Category 1 a
 the badge system and the WXC).
 ****
 
-== Introduction This document contains the rules, procedures and specifications applying to
+== Introduction
+This document contains the rules, procedures and specifications applying to
 equipment that records flight performances to FAI/CIVL criteria using instruments based on Global
 Navigation Satellite Systems (GNSS).
 
