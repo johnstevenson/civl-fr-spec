@@ -1,8 +1,12 @@
 #!/bin/sh
 
+# Creates pdf and html output in the /releases directory
+# from either the latest tag on master or a passed-in tag
+# as the first argument
+
 dir=$(cd "${0%[/\\]*}" > /dev/null; pwd)
 
-# Change to this root durectory
+# Change to this root directory
 cd "$dir"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 
@@ -33,7 +37,7 @@ fi
 
 # Get the date of the tag's commit
 sha=$(git rev-parse $tag)
-date=$(git log -1 --date=short --pretty=format:%cd $sha)
+cdate=$(git log -1 --date=short --pretty=format:%cd $sha)
 
 doc_basename=civl-fr-spec
 doc=$doc_basename.adoc
@@ -43,7 +47,7 @@ html_release=releases/$doc_basename-$tag.html
 
 function convert_to_pdf {
 
-    asciidoctor-pdf -o "$pdf_release" -a "release=$tag" -a "docdate=$date" "$doc_release"
+    asciidoctor-pdf -o "$pdf_release" -a "release=$tag" -a "docdate=$cdate" "$doc_release"
     if [ $? -ne 0 ]; then
         echo "asciidoctor-pdf failed"
         return 1
@@ -54,7 +58,7 @@ function convert_to_pdf {
 
 function convert_to_html {
 
-    asciidoctor -o "$html_release" -a "release=$tag" -a "docdate=$date" "$doc_release"
+    asciidoctor -o "$html_release" -a "release=$tag" -a "docdate=$cdate" "$doc_release"
 
     if [ $? -ne 0 ]; then
         echo "asciidoctor failed"
