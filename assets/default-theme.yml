@@ -81,6 +81,8 @@ heading:
 title_page:
   align: right
   logo:
+    image: civl-logo.jpg
+    image_align: right
     top: 10%
   title:
     top: 35%

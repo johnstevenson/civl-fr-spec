@@ -17,9 +17,9 @@ fi
 
 # Get the date of the current commit
 ts=$(git log -n1 --pretty=%ct HEAD)
-cdate=$(date -ud "@$ts" "+%Y-%m-%d %H:%M:%S")
+revdate=$(date -ud "@$ts" "+%Y-%m-%d %H:%M:%S")
 hash=$(git log -n1 --pretty="%h" HEAD)
-release=$hash-dev
+revnumber=$hash-dev
 
 doc_basename=dev-spec
 doc=civl-fr-spec.adoc
@@ -28,7 +28,7 @@ html_release=temp/$doc_basename-$hash.html
 
 function convert_to_pdf {
 
-    asciidoctor-pdf -o "$pdf_release" -a "release=$release" -a "docdate=$cdate" "$doc"
+    asciidoctor-pdf -o "$pdf_release" -a "revnumber=$revnumber" -a "revdate=$revdate" "$doc"
     if [ $? -ne 0 ]; then
         echo "asciidoctor-pdf failed"
         return 1
@@ -39,7 +39,7 @@ function convert_to_pdf {
 
 function convert_to_html {
 
-    asciidoctor -o "$html_release" -a "release=$release" -a "docdate=$cdate" "$doc"
+    asciidoctor -o "$html_release" -a "revnumber=$revnumber" -a "revdate=$revdate" "$doc"
     if [ $? -ne 0 ]; then
         echo "asciidoctor failed"
         return 1

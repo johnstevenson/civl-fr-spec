@@ -37,17 +37,17 @@ fi
 
 # Get the date of the tag's commit
 sha=$(git rev-parse $tag)
-cdate=$(git log -1 --date=short --pretty=format:%cd $sha)
+revdate=$(git log -1 --date=short --pretty=format:%cd $sha)
 
 doc_basename=civl-fr-spec
 doc=$doc_basename.adoc
-doc_release=tmp-$doc_basename-$tag.adoc
-pdf_release=releases/$doc_basename-$tag.pdf
+tmpdoc=tmp-$doc_basename-$tag.adoc
+pdf_release=releases2/$doc_basename-$tag.pdf
 html_release=releases/$doc_basename-$tag.html
 
 function convert_to_pdf {
 
-    asciidoctor-pdf -o "$pdf_release" -a "release=$tag" -a "docdate=$cdate" "$doc_release"
+    asciidoctor-pdf -o "$pdf_release" -a "revnumber=$tag" -a "revdate=$revdate" "$tmpdoc"
     if [ $? -ne 0 ]; then
         echo "asciidoctor-pdf failed"
         return 1
@@ -58,7 +58,7 @@ function convert_to_pdf {
 
 function convert_to_html {
 
-    asciidoctor -o "$html_release" -a "release=$tag" -a "docdate=$cdate" "$doc_release"
+    asciidoctor -o "$html_release" -a "revnumber=$tag" -a "revdate=$revdate" "$tmpdoc"
 
     if [ $? -ne 0 ]; then
         echo "asciidoctor failed"
@@ -70,7 +70,7 @@ function convert_to_html {
 
 exit_code=1
 
-if git show $tag:$doc > "$doc_release" ; then
+if git show $tag:$doc > "$tmpdoc" ; then
 
     if convert_to_pdf && convert_to_html ; then
         exit_code=0
@@ -90,5 +90,5 @@ else
     fi
 fi
 
-unlink $doc_release
+unlink $tmpdoc
 exit $exit_code

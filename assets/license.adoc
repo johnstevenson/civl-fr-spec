@@ -1,0 +1,20 @@
+[colophon]
+= License
+
+Copyright (c) {docyear} Fédération Aéronautique Internationale
+
+All rights reserved. Copyright in this document is owned by the Fédération Aéronautique Internationale (FAI). Any person acting on behalf of the FAI or one of its Members is hereby authorised to copy, print, and distribute this document, subject to the following conditions:
+
+. The document may be used for information only and may not be exploited for commercial purposes.
+. Any copy of this document or portion thereof must include this copyright notice.
+. Regulations applicable to air law, air traffic and control in the respective countries are reserved in any event. They must be observed and, where applicable, take precedence over any sport regulations.
+
+Note that any product, process or technology described in the document may be the subject of other Intellectual Property rights reserved by the Fédération Aéronautique Internationale or other entities and is not licensed hereunder.
+
+'''
+[%hardbreaks]
+_Fédération Aéronautique Internationale_
+_Avenue de Rhodanie 54, CH-1007 Lausanne, Switzerland_
+_Tel: +41 21 345 1070_
+_www.fai.org_
+_info@fai.org_
