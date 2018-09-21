@@ -42,7 +42,7 @@ revdate=$(git log -1 --date=short --pretty=format:%cd $sha)
 doc_basename=civl-fr-spec
 doc=$doc_basename.adoc
 tmpdoc=tmp-$doc_basename-$tag.adoc
-pdf_release=releases2/$doc_basename-$tag.pdf
+pdf_release=releases/$doc_basename-$tag.pdf
 html_release=releases/$doc_basename-$tag.html
 
 function convert_to_pdf {

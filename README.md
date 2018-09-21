@@ -4,7 +4,9 @@ Technical specification for CIVL flight recorders.
 
 ## About
 
-This repo contains the source text in [asciidoc][asciidoc] format to make it easier to work with.
+This repo contains the source text in [asciidoc][asciidoc] format, to make it easier to work with rather than sharing a Word document.
+
+See [civl-fr-spec.adoc](civl-fr-spec.adoc), which is the specification rendered by the Github interface (click the `Raw` button to see plain text).
 
 ## Toolchain
 
