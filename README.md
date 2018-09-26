@@ -1,12 +1,14 @@
 # civl-fr-spec
 
-Technical specification for CIVL flight recorders.
+Technical specification for CIVL flight recorders. The official release version is available from https://www.fai.org/civl-documents 
 
 ## About
 
 This repo contains the source text in [asciidoc][asciidoc] format, to make it easier to work with rather than sharing a Word document.
 
 See [civl-fr-spec.adoc](civl-fr-spec.adoc), which is the specification rendered by the Github interface (click the `Raw` button to see plain text).
+
+Note that the `master` branch will not necessarily reflect the current version.
 
 ## Toolchain
 
